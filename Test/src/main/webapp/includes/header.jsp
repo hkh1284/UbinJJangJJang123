@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -12,7 +13,6 @@
             crossorigin="anonymous"
     />
 </head>
-<style type="text/css"></style>
 <body>
 <div id="main-container" class="d-flex flex-column p-4">
     <header class="d-flex justify-content-between align-items-end">
@@ -25,13 +25,17 @@
             </div>
         </div>
         <nav class="nav">
-            <a class="nav-link active" href="#">Login</a>
-            <a class="nav-link" href="#">Sign-Up</a>
-        </nav>
-        <nav class="nav d-none">
-            <a class="nav-link active" href="#">Mypage</a>
-            <a class="nav-link" href="#">Logout</a>
+            <c:choose>
+                <c:when test="${sessionScope.loginUser eq null}">
+                    <a class="nav-link" href="<c:url value='/user/login.jsp' />">LOGIN</a>
+                    <a class="nav-link" href="<c:url value='/user/signup.jsp' />">SIGNUP</a>
+                    <a class="nav-link" href="<c:url value='/user?action=logout'/>">LOGOUT</a>
+                </c:when>
+                <c:otherwise>
+                    <a class="nav-link" href="<c:url value='/user/mypage.jsp'/>">MY-PAGE</a>
+                </c:otherwise>
+            </c:choose>
         </nav>
     </header>
     <hr/>
-    <main class="min-vh-100">
+    <main class=" min-vh-100">
